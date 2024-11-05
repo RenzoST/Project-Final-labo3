@@ -1,70 +1,118 @@
-const allGamesEl = document.querySelector('#allgames');
-const resultsEl = document.querySelector('#results');
-const showMoreBtnEl = document.querySelector('#btn-show-more');
-const searchEl = document.querySelector('#search');
-const formEl = document.querySelector('form');
+const searchEl = document.getElementById("search-input");
+const formEl = document.getElementById("search-form");
+const paginationsEl = document.querySelector(".paginations ul");
+const containerEl = document.getElementById("movies-container");
+const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=247b47a57e4ab0a9d01e0aadd3f72a14&language=es-MX&page=`;
+const searchURL = `https://api.themoviedb.org/3/search/movie?api_key=247b47a57e4ab0a9d01e0aadd3f72a14&language=es-MX&query=`;
 
-let page = 1;
+let currentPage = parseInt(localStorage.getItem("currentPage")) || 1;
+const totalPages = 100; // Asumiendo 100 páginas para este ejemplo
 
-const npcs = [];
-const weapons = [];
-
-const { VITE_API_URL: apiUrl, VITE_ACCESS_KEY: accessKey } = import.meta.env;
-
-
-fetchNpcs()
-
-async function fetchNpcs() 
-{
-
-  let inputData = searchEl.value;
-
-  let url = new URL(apiUrl);
-  url.searchParams.append("search", inputData);
-  url.searchParams.append("key", accessKey);
-  url.searchParams.append("page", page);
-
-  if (page === 1) {
-    resultsEl.innerHTML = "";
+// Función para obtener películas
+const getMovies = async (url) => {
+  try {
+    const respuesta = await fetch(url);
+    if (!respuesta.ok) {
+      console.error("Error en la carga de datos");
+      return;
+    }
+    const datos = await respuesta.json();
+    // Se construye el HTML de las películas
+    let peliculas = "";
+    datos.results.forEach((pelicula) => {
+      peliculas += `
+      <a class="enlace" href="detalle_pelicula.html?id=${pelicula.id}">
+      <div class="pelicula">
+        <img class="poster" src="https://image.tmdb.org/t/p/w500/${pelicula.poster_path}">
+        <h3 class="titulo">${pelicula.title}</h3>
+      </div>
+      </a>
+      `;
+    });
+    containerEl.innerHTML = peliculas;
+    // Actualizar página activa
+    updateActivePage();
+    updatePagination();
+  } catch {
+    console.error("Error");
   }
+};
 
-  const response = await fetch(url);
-  const { results } = await response.json();
-
-  results?.map((result) => {
-    const imageWrapper = document.createElement("article");
-    imageWrapper.classList.add("search-result");
-
-    const image = document.createElement("img");
-    image.src = result.background_image;
-
-    const name = document.createElement("h3");
-    name.textContent = result.name;
-
-
-    imageWrapper.appendChild(image);
-    imageWrapper.appendChild(name);
-
-    resultsEl.appendChild(imageWrapper);
+// Actualizar página activa
+const updateActivePage = () => {
+  const pages = paginationsEl.querySelectorAll("li[data-page]");
+  pages.forEach((page) => {
+    if (parseInt(page.getAttribute("data-page")) === currentPage) {
+      page.classList.add("active");
+    } else {
+      page.classList.remove("active");
+    }
   });
+};
 
-  if( results.length < 20 ){
-    showMoreBtnEl.style.display = "none";
+// Actualizar paginación
+const updatePagination = () => {
+  paginationsEl.innerHTML = "";
+
+  const startPage = currentPage > 5 ? currentPage - 4 : 1;
+  const endPage = currentPage > 5 ? currentPage + 1 : 5;
+
+  if (currentPage > 1) {
+    const prevLi = document.createElement("li");
+    prevLi.id = "prev-btn";
+    prevLi.innerText = "Anterior";
+    paginationsEl.appendChild(prevLi);
+    prevLi.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        updatePageAndFetchMovies();
+      }
+    });
   }
-  else{
-    showMoreBtnEl.style.display = "block";
+
+  for (let i = startPage; i <= endPage && i <= totalPages; i++) {
+    const li = document.createElement("li");
+    li.setAttribute("data-page", i);
+    li.innerText = i;
+    if (i === currentPage) {
+      li.classList.add("active");
+    }
+    paginationsEl.appendChild(li);
+    li.addEventListener("click", () => {
+      currentPage = i;
+      updatePageAndFetchMovies();
+    });
   }
-  
-  console.log(results);
-  page++;
 
-}
+  if (currentPage < totalPages) {
+    const nextLi = document.createElement("li");
+    nextLi.id = "next-btn";
+    nextLi.innerText = "Siguiente";
+    paginationsEl.appendChild(nextLi);
+    nextLi.addEventListener("click", () => {
+      currentPage++;
+      updatePageAndFetchMovies();
+    });
+  }
+};
 
-showMoreBtnEl.addEventListener("click", () => fetchNpcs());
+// Actualizar página y obtener películas
+const updatePageAndFetchMovies = () => {
+  localStorage.setItem("currentPage", currentPage);
+  getMovies(API_URL + currentPage);
+};
 
+// Evento del formulario de búsqueda
 formEl.addEventListener("submit", (e) => {
   e.preventDefault();
-  page = 1;
-  fetchNpcs();
+  const searchTerm = searchEl.value;
+  if (searchTerm && searchTerm !== "") {
+    getMovies(searchURL + searchTerm);
+    searchEl.value = "";
+  } else {
+    window.location.reload();
+  }
 });
 
+// Carga inicial
+updatePageAndFetchMovies();

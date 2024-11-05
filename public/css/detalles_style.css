@@ -1,0 +1,118 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  margin: 10px;
+  padding: 0;
+  background-color: #000000;
+}
+
+.pelicula {
+  background-color: #c8b6ff;
+  border-radius: 5px;
+  margin: 10px auto;
+  padding: 10px;
+  max-width: 1000px;
+  text-align: center;
+  box-shadow: 0 0 10px #9575f3;
+  display: flex;
+  flex-direction: column; /* Ajuste para responsive */
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.3s;
+  margin-top: 15px;
+}
+
+.poster {
+  width: 100%; /* Ajuste para responsive */
+  max-width: 300px;
+  border-radius: 10px;
+}
+
+.movie-info {
+  width: 100%; /* Ajuste para responsive */
+  text-align: left;
+  padding: 0 20px;
+  margin-top: 10px; /* Espacio adicional en dispositivos móviles */
+}
+
+.trailer {
+  width: 100%; /* Ajuste para responsive */
+  border-radius: 5px;
+  margin-top: 10px; /* Espacio adicional en dispositivos móviles */
+}
+
+h3 {
+  font-family: fantasy;
+  font-style: normal;
+  font-size: 2em;
+}
+
+footer {
+  background-color: #c8b6ff;
+  color: #fff;
+  padding: 20px 0;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-center {
+  margin: 0 10px;
+}
+
+.footer-center p {
+  margin: 5px 0;
+  color: #000;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #444;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: #000;
+}
+/*volver */
+.volver {
+  text-align: center;
+  margin: 20px;
+}
+
+.volver a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #c8b6ff;
+  color: #00000080;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.volver a:hover {
+  background-color: #ffffff;
+  color: #c8b6ff;
+}
+
+/* Media Queries para dispositivos móviles */
+@media (max-width: 768px) {
+  .pelicula {
+    width: 90%;
+    flex-direction: column;
+  }
+
+  .poster,
+  .movie-info,
+  .trailer {
+    width: 100%;
+  }
+}
