@@ -9,8 +9,8 @@ body {
 
 .contPresentacion {
   position: absolute;
-  top: 35%;
-  left: 30%;
+  top: 40%;
+  left: 38%;
 }
 
 .listPerfiles {
@@ -21,14 +21,52 @@ body {
   gap: 25px;
 }
 
-.img-presentacion:hover {
+.listPerfiles li {
+  width: 51px;
+  height: 51px;
+  box-sizing: border-box;
+}
+
+.listPerfiles li:hover .img-presentacion {
   border: 1px solid #fff;
+}
+
+.img-presentacion {
+  width: 50px;
+  transition: border 0.3s ease;
 }
 
 p {
   color: #aaa;
 }
 
-p:hover {
-  color: #fff;
+@media only screen and (max-width: 768px) {
+  .contPresentacion {
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    text-align: center;
+  }
+
+  .listPerfiles {
+    position: static;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 10px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .contPresentacion {
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -25%);
+  }
+
+  .listPerfiles {
+    position: static;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 }
