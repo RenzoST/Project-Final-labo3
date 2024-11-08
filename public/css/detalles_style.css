@@ -5,6 +5,68 @@ body {
   background-color: #000000;
 }
 
+nav a {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+header nav a:hover {
+  color: #fff;
+}
+
+nav main .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #bbd0ff;
+}
+
+header {
+  padding: 30px 0;
+  background-color: rgba(0, 0, 0, 0.597);
+}
+
+.contHeader {
+  width: 90%;
+  margin: auto;
+}
+
+header .contHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .tittle {
+  font-family: "Bebas Neue", cursive;
+  font-size: 40px;
+  font-weight: normal;
+  border-radius: 5px;
+  color: rgb(229, 9, 20);
+  transition: 0.7s all;
+  cursor: pointer;
+}
+
+.tittle:hover {
+  color: #aaa;
+}
+
+.img {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  margin-left: 20px;
+  transition: all 0.5s;
+}
+
+.img:hover {
+  transform: scale(0.8);
+  translate: (-30px);
+}
+
 .pelicula {
   background-color: #c8b6ff;
   border-radius: 5px;
