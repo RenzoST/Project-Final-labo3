@@ -67,6 +67,7 @@ main {
 form {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -251,6 +252,22 @@ footer {
   margin: 0;
   color: rgb(229, 9, 20);
 }
+
+select{
+  background-color: #aaa;
+  font-size: 15px;
+  height: 40px;
+  width: 100px;
+  border-radius: 10px;
+  border: none;
+}
+
+
+select:focus option{
+  color: black;
+  border: none;
+}
+
 
 @media only screen and (max-width: 768px) {
   .go-movies {
