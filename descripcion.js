@@ -1,15 +1,26 @@
 const params = new URLSearchParams(window.location.search);
 const movieId = params.get("id");
 const containerEl = document.getElementById("container");
-const API_URL = `https://api.themoviedb.org/3/movie/${movieId}?api_key=247b47a57e4ab0a9d01e0aadd3f72a14&language=es-MX`;
-const TRAILER_URL = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=247b47a57e4ab0a9d01e0aadd3f72a14&language=es-MX`;
+
+const { VITE_API_URL: urlApi, VITE_API_KEY: keyApi, VITE_API_TOKEN: tokenApi } = import.meta.env;
+const movieUrl = (id) => `${urlApi}/movie/${id}?api_key=${keyApi}`;
+const trailerUrl = (id) => `${urlApi}/movie/${id}/videos?api_key=${keyApi}`;
+
+const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: `Bearer ${tokenApi}`
+  }
+}
 
 const getData = async () => {
   try {
-    const response = await fetch(API_URL);
+    const response = await fetch(movieUrl(movieId), options);
     const data = await response.json();
 
-    const videoResponse = await fetch(TRAILER_URL);
+    console.log(data);
+    const videoResponse = await fetch(trailerUrl(movieId), options);
     const videoData = await videoResponse.json();
 
     // Busca el tráiler en los resultados
