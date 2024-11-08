@@ -70,9 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       renderMovies(validMovies);
 
-      // Actualizar la paginación después de renderizar
       updatePagination();
-      // Aquí es donde deberías llamar a updateActivePage después de actualizar la paginación
       updateActivePage();
     } catch (error) {
       console.error("Error al obtener los detalles de las películas:", error);
@@ -98,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let searchMode = false; // Estado para indicar si estamos en modo búsqueda
   let searchQuery = ""; // Almacena el término de búsqueda actual
 
-  // Función para buscar películas por nombre
   const movieSearch = async (query, page = 1) => {
     try {
       console.log(`Buscando películas para: ${query}, Página: ${page}`);
@@ -115,7 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
       searchMode = true;
       searchQuery = query;
 
-      // Actualizar paginación en modo búsqueda según el número total de páginas de la búsqueda
       updatePagination(data.total_pages);
       updateActivePage();
     } catch (error) {
@@ -123,8 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Actualizar la paginación en función de si estamos en modo búsqueda o no
-  // Actualizar paginación
+  // Actualiza la paginación en función de si estamos en modo búsqueda o no
   const updatePagination = () => {
     paginationsEl.innerHTML = "";
 
@@ -169,11 +164,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Actualización de la página
     updateActivePage();
   };
 
-  // cambiar color de pagina activa
   const updateActivePage = () => {
     const pages = paginationsEl.querySelectorAll("li[data-page]");
     pages.forEach((page) => {
@@ -190,9 +183,9 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("currentPage", currentPage);
 
     if (searchMode) {
-      movieSearch(searchQuery, currentPage); // Realizar la búsqueda en la página actual
+      movieSearch(searchQuery, currentPage);
     } else {
-      renderAllMovieDetails(); // Cargar todas las películas en la página actual
+      renderAllMovieDetails();
     }
   };
 
@@ -202,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       if (searchEl && searchEl.value !== "") {
         currentPage = 1; // Reiniciar a la primera página en una nueva búsqueda
-        movieSearch(searchEl.value); // Iniciar la búsqueda
+        movieSearch(searchEl.value);
         searchEl.value = "";
       }
     });
