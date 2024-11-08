@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchEl = document.querySelector("#search-input");
   const paginationsEl = document.querySelector(".paginations ul");
   const containerEl = document.querySelector("#movies-container");
+  const ordenEl = document.querySelector("#orden");
 
   const {
     VITE_API_URL: urlApi,
@@ -21,6 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchUrl = (query, page = 1) =>
     `${urlApi}/search/movie?api_key=${keyApi}&query=${query}&page=${page}`;
 
+  const popularUrl = (page) =>
+    `${urlApi}/movie/popular?api_key=${keyApi}&language=es-MX&page=${page}`;
+  const topRatedUrl = (page) =>
+    `${urlApi}/movie/top_rated?api_key=${keyApi}&language=es-MX&page=${page}`;
+  const upcomingUrl = (page) =>
+    `${urlApi}/movie/upcoming?api_key=${keyApi}&language=es-MX&page=${page}`;
+
   const options = {
     method: "GET",
     headers: {
@@ -28,6 +36,96 @@ document.addEventListener("DOMContentLoaded", () => {
       Authorization: `Bearer ${tokenApi}`,
     },
   };
+
+  // Funcion para obtener las peliculas mas populares
+  const popularMovies = async (page) => {
+    try {
+      const response = await fetch(popularUrl(page), options);
+      if (!response.ok) throw new Error("Error en la carga de datos");
+
+      const data = await response.json();
+      return (movieIds = data.results
+        .filter((movie) => movie.adult === false) // Excluir las de contenido adulto
+        .map((movie) => movie.id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Funcion para obtener las peliculas mejor calificadas
+  const topRatedMovies = async (page) => {
+    try {
+      const response = await fetch(topRatedUrl(page), options);
+      if (!response.ok) throw new Error("Error en la carga de datos");
+
+      const data = await response.json();
+      return (movieIds = data.results
+        .filter((movie) => movie.adult === false) // Excluir las de contenido adulto
+        .map((movie) => movie.id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Funcion para obtener las peliculas proximas
+  const upcomingMovies = async (page) => {
+    try {
+      const response = await fetch(upcomingUrl(page), options);
+      if (!response.ok) throw new Error("Error en la carga de datos");
+
+      const data = await response.json();
+      return (movieIds = data.results
+        .filter((movie) => movie.adult === false) // Excluir las de contenido adulto
+        .map((movie) => movie.id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  ordenEl.addEventListener("change", async (e) => {
+    e.preventDefault();
+    currentPage = 1; // Reiniciar a la primera página cuando se selecciona una nueva categoría
+    searchMode = false; // Salir del modo de búsqueda
+    searchQuery = ""; // Limpiar el término de búsqueda
+
+    try {
+      let moviesToRender = [];
+      switch (e.target.value) {
+        case "popular":
+          moviesToRender = await popularMovies(currentPage);
+          break;
+        case "top-rated":
+          moviesToRender = await topRatedMovies(currentPage);
+          break;
+        case "upcoming":
+          moviesToRender = await upcomingMovies(currentPage);
+          break;
+        case "all":
+        default:
+          moviesToRender = await allMovies();
+          break;
+      }
+
+      // Llama a `renderMovies` para mostrar las películas obtenidas
+      if (moviesToRender && moviesToRender.length > 0) {
+        const moviePromises = moviesToRender
+          .slice(0, 20)
+          .map((id) => getMovieDetails(id));
+        const movies = await Promise.all(moviePromises);
+        const validMovies = movies.filter((movie) => movie !== null);
+        renderMovies(validMovies);
+      } else {
+        console.error(
+          "No se encontraron películas para la opción seleccionada."
+        );
+      }
+
+      updatePagination(); // Actualiza la paginación en función de los datos cargados
+      updateActivePage();
+    } catch (error) {
+      console.error("Error al obtener las películas:", error);
+    }
+  });
 
   // Función para obtener los IDs de las películas en la página actual
   const allMovies = async () => {
@@ -189,15 +287,62 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Evento del formulario de búsqueda
   if (formEl) {
-    formEl.addEventListener("submit", (e) => {
+    formEl.addEventListener("submit", async (e) => {
       e.preventDefault();
-      if (searchEl && searchEl.value !== "") {
-        currentPage = 1; // Reiniciar a la primera página en una nueva búsqueda
-        movieSearch(searchEl.value);
-        searchEl.value = "";
+      currentPage = 1; // Reiniciar a la primera página en una nueva búsqueda o selección de categoría
+
+      const query = searchEl.value.trim();
+      const categoriaSeleccionada = ordenEl.value;
+
+      if (query !== "") {
+        // Si hay un término de búsqueda, realiza la búsqueda
+        searchMode = true;
+        searchQuery = query;
+        await movieSearch(query);
+      } else {
+        // Si no hay un término de búsqueda, usa la categoría seleccionada
+        searchMode = false;
+        try {
+          let peliculasParaMostrar = [];
+          switch (categoriaSeleccionada) {
+            case "popular":
+              peliculasParaMostrar = await popularMovies(currentPage);
+              break;
+            case "top-rated":
+              peliculasParaMostrar = await topRatedMovies(currentPage);
+              break;
+            case "upcoming":
+              peliculasParaMostrar = await upcomingMovies(currentPage);
+              break;
+            case "all":
+            default:
+              peliculasParaMostrar = await allMovies();
+              break;
+          }
+
+          if (peliculasParaMostrar && peliculasParaMostrar.length > 0) {
+            const moviePromises = peliculasParaMostrar
+              .slice(0, 20)
+              .map((id) => getMovieDetails(id));
+            const peliculas = await Promise.all(moviePromises);
+            const peliculasValidas = peliculas.filter(
+              (pelicula) => pelicula !== null
+            );
+            renderMovies(peliculasValidas);
+          } else {
+            console.error(
+              "No se encontraron películas para la opción seleccionada."
+            );
+          }
+
+          updatePagination();
+          updateActivePage();
+        } catch (error) {
+          console.error("Error al obtener las películas:", error);
+        }
       }
+      searchEl.value = "";
     });
   } else {
     console.error("No se encuentra el formulario con id 'search-form'");

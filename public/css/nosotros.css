@@ -1,0 +1,470 @@
+:root {
+    --color-primario: #000000;
+    --color-secundario: #bd0f0f;
+    --color-contenido:#fff;
+    --color-hover: #ff0000;
+    --color-box1-utn:#585555;
+    --color-box2-utn:#333131;
+    --color-subtitulo:#801313;
+  
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: var(--color-primario);
+    color: #333;
+    padding: 20px;
+}
+
+
+header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 20px;
+    color: var(--color-contenido);
+    background-color: var(--color-primario);
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+
+
+.logo-container {
+    display: flex;
+    align-items: center; 
+}
+
+.logo {
+    width: 40px; 
+    height: auto;
+    
+}
+
+/* Estilos para la navbar */
+nav ul {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    padding: 20px;
+}
+
+nav ul a {
+    text-decoration: none;
+    color: var(--color-contenido); 
+    font-size: 16px;
+    transition: color 0.3s ease; /* Añadir transición suave */
+}
+
+nav ul a:hover {
+    color: var(--color-hover);
+    border-radius:2px;
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+    /* Cambia el diseño del header */
+    header {
+        flex-direction: column;
+        align-items: center; /* Centra el contenido del header */
+        padding: 20px 0;
+    }
+
+    /* Logo en la parte superior */
+    .logo-container {
+        margin-bottom: 20px; /* Agrega espacio entre el logo y la navbar */
+    }
+
+    /* Barra de navegación debajo del logo, en forma de columna */
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centra los elementos de la barra de navegación */
+        width: 100%; /* Hace que ocupe todo el ancho de la página */
+        padding: 0;
+    }
+
+    /* Espaciado entre los elementos de la barra de navegación */
+    nav ul li {
+        margin: 10px 0;
+    }
+}
+
+
+
+
+
+
+
+.inicio {
+    width: 85vw; /* Ocupa el 90% del ancho de la pantalla */
+    height: 50vh;
+    margin: 20px auto; /* Centra la caja horizontalmente y agrega margen vertical */
+    background-color: var(--color-primario);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-contenido);
+    border-radius: 8px; /* Opcional: para bordes redondeados */
+    gap: 30px;
+}
+
+.inicio-title {
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+.inicio-subtitle {
+    font-size: 20px;
+    margin: 5px 0;
+    color: var(--color-secundario);
+}
+
+.inicio-btn {
+    height: 50px;
+    width: 50px;
+    margin: 5px 0;
+    padding: 10px;
+    color: var(--color-contenido);
+    background-color: #918f8f;
+    border-radius: 10px;
+    transition: all 0.3s ease; /* Transición suave para todas las propiedades */
+    background-image: url(../home-icon.png);
+    background-size: cover;
+    background-position: center;
+}
+
+.inicio-btn:hover {
+    background-color: #fff; /* Cambia el color de fondo */
+    transform: scale(1.1); /* Aumenta el tamaño del botón */
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+    .inicio {
+        width: 90vw;  /* Ajusta el ancho para pantallas pequeñas */
+        height: auto;  /* Permite que la altura se ajuste automáticamente */
+        padding: 20px;
+    }
+
+    .inicio-title {
+        font-size: 30px;  /* Reduce el tamaño del título */
+    }
+
+    .inicio-subtitle {
+        font-size: 18px;  /* Reduce el tamaño del subtítulo */
+    }
+
+    .inicio-btn {
+        font-size: 16px;  /* Reduce el tamaño del botón */
+        padding: 8px 16px;  /* Ajusta el tamaño del botón */
+    }
+}
+
+/* Estilos para la sección de títulos */
+.title {
+    text-align: center;
+    margin: 40px 0; /* Espacio arriba y abajo de la sección de títulos */
+}
+
+.small-title {
+    font-size: 18px;
+    color: var(--color-hover);
+    margin-bottom: 20px;
+}
+
+.main-title {
+    font-size: 32px;
+    color: var(--color-contenido);
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 768px) {
+    .small-title {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .main-title {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .title {
+        margin: 20px 0; /* Reduce el espacio superior e inferior */
+    }
+}
+
+
+.box {
+    flex: 1; /* Ocupa todo el ancho disponible, dividiéndolo entre las cajas */
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    padding: 20px;
+    background-color: var(--color-secundario);
+    color: var(--color-contenido);
+}
+
+/* Estilos para la sección de rectángulos */
+.caracteristicas {
+    display: flex;
+    justify-content: space-between; /* Deja espacio entre las cajas */
+    align-items: center;
+    width: 90%; /* Abarca casi todo el ancho de la vista */
+    margin: 20px auto; /* Centra horizontalmente la caja principal */
+    padding: 20px;
+    background-color: var(--color-primario); /* Color de fondo */
+    border-radius: 10px;
+}
+
+.caracImage {
+    background-color: var(--color-primario);
+    flex: 1; /* Cada caja ocupa el mismo espacio */
+    padding: 20px;
+    color: var(--color-contenido);
+    margin: 10px;
+    box-sizing: border-box; /* Asegura que el padding no se sobreponga al ancho */
+}
+
+.carac{
+    background-color: var(--color-primario);
+    flex: 1; /* Cada caja ocupa el mismo espacio */
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    color: var(--color-contenido);
+    margin: 10px;
+    box-sizing: border-box; /* Asegura que el padding no se sobreponga al ancho */
+    gap: 25px;
+}
+
+.carac-trabajo{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+   width: 60%;
+   gap: 0 10px;
+    
+    
+}
+
+.carac-trabajo img{
+    width: 24px;
+    height: 24px;
+}
+
+.utnImage {
+    max-width: 100%; /* Asegura que la imagen no sobresalga de la caja */
+    height: auto;
+    object-fit: contain; /* Mantiene las proporciones de la imagen */
+}
+
+/* Media query intermedia para pantallas entre 768px y 1024px */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .caracImage img {
+        max-width: 90%; /* Ajusta el ancho máximo de la imagen */
+        height: auto; /* Mantiene la proporción */
+    }
+}
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+    .caracteristicas {
+        flex-direction: column; /* Apila las cajas en pantallas pequeñas */
+        align-items: center; /* Centra las cajas horizontalmente */
+    }
+
+    .caracImage, 
+    .carac {
+        flex: none; /* Elimina el flex para que las cajas no se estiren */
+        width: 90%; /* Asegura que ocupen el 90% del ancho de la pantalla */
+        margin: 15px 0; /* Espacio entre las cajas */
+    }
+
+    .carac {
+        text-align: center; /* Alinea el texto de las cajas al centro */
+    }
+
+    .caracImage img {
+        max-width: 100%; /* Evita que la imagen se haga demasiado grande */
+        height: auto; /* Mantiene la proporción */
+    }
+}
+
+
+.integrantes {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espacio entre las cajas */
+    margin: 40px 0; /* Espacio alrededor de la sección */
+    flex-wrap: wrap;
+}
+
+.int {
+    background-color: var(--color-primario);
+    padding: 20px;
+    text-align: center;
+    color: var(--color-contenido);
+    width: 350px; /* Ajusta este tamaño según el diseño deseado */
+    border-radius: 5px;
+    flex: 1 1 300px; /* Asegura que las cajas se ajusten en pantallas más pequeñas */
+    box-sizing: border-box;
+    transition: transform 0.3s ease; /* Transición suave solo para el tamaño */
+    overflow: hidden;
+}
+
+.int:hover {
+    transform: scale(1.05); /* Aumenta el tamaño de la carta al 105% */
+}
+
+.int-image {
+    max-width: 100%;
+    width: 380px;
+    height: 380px ;
+    border-radius: 5px;
+    
+}
+
+.int-title {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.int-subtitle {
+    font-size: 14px;
+    margin: 5px 0;
+    color: var(--color-hover);
+}
+
+.int-icon {
+    width: 24px;
+    height: 24px;
+    margin-top: 10px;
+}
+
+
+
+@media (max-width: 768px) {
+    .integrantes {
+        flex-direction: column;
+        align-items: center; 
+    }
+
+    .int {
+        width: 80%; 
+        margin-bottom: 20px; 
+    }
+}
+
+.tecnologias-logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Espacio entre los logos */
+    justify-content: center; /* Centrar los logos horizontalmente */
+    align-items: center; /* Alinear verticalmente si los logos tienen diferente altura */
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .tecnologias-logos li img {
+    width: 100px; /* Ajusta el tamaño según tus preferencias */
+    height: auto; /* Mantener proporción */
+    transition: transform 0.3s ease; /* Transición suave */
+  }
+
+  .tecnologias-logos li img:hover {
+    transform: scale(1.2); /* Aumenta el tamaño al pasar el cursor */
+  }
+
+
+  @media (max-width: 860px) {
+    .tecnologias-logos li img {
+      width: 80px; /* Tamaño ajustado para tablets */
+    }
+  }
+  /* Media Query para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .tecnologias-logos li img {
+      width: 80px; /* Tamaño ajustado para tablets */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .tecnologias-logos li img {
+      width: 60px; /* Tamaño ajustado para móviles */
+    }
+  }
+
+
+.alumnos {
+    display: flex;
+    justify-content: space-between;  
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+
+.utn {
+    background-color: var(--color-box1-utn);
+}
+
+.utnImage {
+    background-color: var(--color-box2-utn);
+}
+
+.utnImage img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+    .alumnos {
+        flex-direction: column;  /* Coloca las cajas en columna en pantallas pequeñas */
+        align-items: center;  /* Centra las cajas */
+    }
+    
+    .box {
+        width: 90%;  /* Ocupa el 90% del ancho del contenedor */
+        margin-bottom: 20px;  /* Espacio entre las cajas */
+    }
+
+    /* Ajuste de tamaño de fuente en pantallas pequeñas */
+    .box {
+        font-size: 14px; /* Reducir tamaño de texto */
+        padding: 15px; /* Reducir el padding */
+    }
+    
+    .utnImage img {
+        max-height: 200px; /* Limitar la altura de la imagen para que no ocupe demasiado espacio */
+    }
+}
+
+
+.footer {
+    background-color: var(--color-primario);
+    padding: 20px;
+    text-align: center;
+    color: var(--color-hover);
+    margin-top: 40px; /* Espacio antes del footer */
+}
+
+.footer-subtitle {
+    font-size: 16px;
+}
+
+
