@@ -5,7 +5,7 @@
     <link rel="icon" type="image/s" href="/public/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PepeFlix</title>
-    <link rel="stylesheet" href="/public/css/detalles_style.css" />
+    <link rel="stylesheet" href="/public/css/style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
       rel="stylesheet"
@@ -25,10 +25,29 @@
       </div>
     </header>
     <main>
-      <div class="volver">
-        <a href="/principal.html" class="logo">REGRESAR</a>
+      <div class="container">
+        <form id="search-form">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Buscar películas..."
+          />
+          <button id="btn" type="submit">Buscar</button>
+          <select name="orden" id="orden">
+            <option value="all">Orden</option>
+            <option value="popular">Popular</option>
+            <option value="top-rated">Top Rated</option>
+            <option value="upcoming">Upcoming</option>
+          </select>
+        </form>
       </div>
-      <div id="container"></div>
+      <div id="movies-container" class="movies-container"></div>
+      <div class="container">
+        <div class="paginations">
+          <ul></ul>
+        </div>
+      </div>
+      <div id="movie-details" class="movie-details" style="display: none"></div>
     </main>
     <footer>
       <div class="footer-container">
@@ -44,6 +63,6 @@
         <p>&copy; 2024 PEPEFLIX. Todos los derechos reservados.</p>
       </div>
     </footer>
-    <script type="module" src="./descripcion.js"></script>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>

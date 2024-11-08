@@ -2,17 +2,21 @@ const params = new URLSearchParams(window.location.search);
 const movieId = params.get("id");
 const containerEl = document.getElementById("container");
 
-const { VITE_API_URL: urlApi, VITE_API_KEY: keyApi, VITE_API_TOKEN: tokenApi } = import.meta.env;
+const {
+  VITE_API_URL: urlApi,
+  VITE_API_KEY: keyApi,
+  VITE_API_TOKEN: tokenApi,
+} = import.meta.env;
 const movieUrl = (id) => `${urlApi}/movie/${id}?api_key=${keyApi}`;
 const trailerUrl = (id) => `${urlApi}/movie/${id}/videos?api_key=${keyApi}`;
 
 const options = {
-  method: 'GET',
+  method: "GET",
   headers: {
-    accept: 'application/json',
-    Authorization: `Bearer ${tokenApi}`
-  }
-}
+    accept: "application/json",
+    Authorization: `Bearer ${tokenApi}`,
+  },
+};
 
 const getData = async () => {
   try {
